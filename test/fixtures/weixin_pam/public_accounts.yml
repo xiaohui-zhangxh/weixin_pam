@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  app_id: MyString
+  app_secret: MyString
+  api_url: MyString
+  api_token: MyString
+  enabled: false
+
+two:
+  name: MyString
+  app_id: MyString
+  app_secret: MyString
+  api_url: MyString
+  api_token: MyString
+  enabled: false

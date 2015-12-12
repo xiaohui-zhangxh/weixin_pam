@@ -1,0 +1,30 @@
+<h1>公众号列表</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>公众号名称</th>
+      <th>app_id</th>
+      <th>是否启用</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @public_accounts.each do |public_account| %>
+      <tr>
+        <td><%= link_to public_account.name, public_account %></td>
+        <td><%= public_account.app_id %></td>
+        <td><%= public_account.enabled ? '是' : '否' %></td>
+        <td>
+          <%= link_to '修改', edit_public_account_path(public_account), class: 'btn btn-xs btn-default' %>
+          <%= link_to '删除', public_account, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '添加', new_public_account_path, class: 'btn btn-success' %>

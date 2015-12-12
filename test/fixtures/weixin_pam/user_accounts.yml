@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  public_account_id: 
+  uid: MyString
+  nickname: MyString
+  headshot: MyString
+  subscribed: false
+
+two:
+  public_account_id: 
+  uid: MyString
+  nickname: MyString
+  headshot: MyString
+  subscribed: false
