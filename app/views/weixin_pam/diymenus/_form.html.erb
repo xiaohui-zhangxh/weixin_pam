@@ -1,0 +1,34 @@
+<%= form_for([@public_account, @diymenu]) do |f| %>
+
+  <div class="field">
+    <%= f.label :public_account_id %><br>
+    <%= f.text_field :public_account_id %>
+  </div>
+  <div class="field">
+    <%= f.label :parent_id %><br>
+    <%= f.text_field :parent_id %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :key %><br>
+    <%= f.text_field :key %>
+  </div>
+  <div class="field">
+    <%= f.label :url %><br>
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <%= f.label :is_show %><br>
+    <%= f.check_box :is_show %>
+  </div>
+  <div class="field">
+    <%= f.label :sort %><br>
+    <%= f.number_field :sort %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

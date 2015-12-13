@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151211153353) do
+ActiveRecord::Schema.define(version: 20151212152624) do
+
+  create_table "weixin_pam_diymenus", force: :cascade do |t|
+    t.integer  "public_account_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.string   "key"
+    t.string   "url"
+    t.boolean  "is_show"
+    t.integer  "sort"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "weixin_pam_diymenus", ["parent_id"], name: "index_weixin_pam_diymenus_on_parent_id"
+  add_index "weixin_pam_diymenus", ["public_account_id"], name: "index_weixin_pam_diymenus_on_public_account_id"
 
   create_table "weixin_pam_public_accounts", force: :cascade do |t|
     t.string   "name"
@@ -25,15 +40,16 @@ ActiveRecord::Schema.define(version: 20151211153353) do
   end
 
   create_table "weixin_pam_user_accounts", force: :cascade do |t|
-    t.integer  "weixin_pam_public_account_id"
+    t.integer  "public_account_id"
     t.string   "uid"
     t.string   "nickname"
     t.string   "headshot"
     t.boolean  "subscribed"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  add_index "weixin_pam_user_accounts", ["weixin_pam_public_account_id"], name: "index_weixin_pam_user_accounts_on_weixin_pam_public_account_id"
+  add_index "weixin_pam_user_accounts", ["public_account_id", "uid"], name: "index_weixin_pam_user_accounts_on_public_account_id_and_uid", unique: true
+  add_index "weixin_pam_user_accounts", ["public_account_id"], name: "index_weixin_pam_user_accounts_on_public_account_id"
 
 end

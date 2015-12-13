@@ -1,0 +1,52 @@
+// Place all the styles related to the Diymenus controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+ol.parent-menus{
+  list-style-type: none;
+  border: 3px solid #666666;
+  padding: 10px;
+  > li{
+    display: block;
+    border-style: solid;
+    border-width: 1px;
+    border-color: green;
+    border-bottom-style: none;
+    background-color: #d9ffd6;
+    padding: 10px;
+    i.glyphicon{
+      margin-right: 10px;
+    }
+    &.dragged {
+      border-bottom-style: solid;
+    }
+  }
+  li:last-child{
+    border-bottom-style: solid;
+  }
+}
+
+ol.sub-menus{
+  list-style-type: none;
+  border: 3px solid #666666;
+  padding: 10px;
+  margin-left: 22px;
+  > li{
+    display: block;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #747474;
+    border-bottom-style: none;
+    background-color: #f6f6f6;
+    padding: 10px;
+    i.glyphicon{
+      margin-right: 10px;
+    }
+    &.dragged {
+      border-bottom-style: solid;
+    }
+  }
+  li:last-child{
+    border-bottom-style: solid;
+  }
+}
