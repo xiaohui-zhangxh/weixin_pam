@@ -1,0 +1,9 @@
+'zh-CN':
+  activerecord:
+    models:
+      weixin_pam/diymenu: 微信菜单
+    attributes:
+      weixin_pam/diymenu:
+        name: 菜单名
+        key: KEY(click：点击推事件)
+        url: URL(view：跳转URL)

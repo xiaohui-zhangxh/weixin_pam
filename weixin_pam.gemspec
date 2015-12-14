@@ -14,12 +14,14 @@ Gem::Specification.new do |s|
   s.description = "With this engine, you can manage multiple Weixin Public Accounts"
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4.2.5"
   s.add_dependency "bootstrap-sass", '~> 3.3.6'
   s.add_dependency "sass-rails", '>= 3.2'
+  s.add_dependency 'rails-i18n', '~> 4.0.0'
+  s.add_dependency "font-awesome-rails"
   s.add_dependency "simple_form", "~> 3.2.0"
   s.add_dependency "sprockets-rails", "> 2.1.4"
   s.add_dependency 'jquery-turbolinks'

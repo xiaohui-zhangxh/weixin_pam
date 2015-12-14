@@ -622,6 +622,7 @@
       this.itemDimensions = undefined
     },
     _destroy: function() {
+      console.log('destroy in container')
       var that = this;
 
       this.target.off(eventNames.start, this.handle);
@@ -676,6 +677,11 @@
   $.fn[pluginName] = function(methodOrOptions) {
     var args = Array.prototype.slice.call(arguments, 1)
 
+    // clear containerGroups for turbolinks
+    if(typeof methodOrOptions === 'object' && methodOrOptions.clear){
+      containerGroups = [];
+    }
+    
     return this.map(function(){
       var $t = $(this),
       object = $t.data(pluginName)

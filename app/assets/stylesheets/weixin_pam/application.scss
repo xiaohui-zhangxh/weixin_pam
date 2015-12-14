@@ -15,5 +15,17 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "font-awesome";
 
 body { padding-top: 20px; padding-bottom: 20px; }
+div#flash-message-box{
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 99999;
+  button.close[data-dismiss='alert']{
+    margin-left: 5px;
+    padding: 0px;
+    height: 1em;
+  }
+}

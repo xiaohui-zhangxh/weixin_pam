@@ -15,7 +15,8 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body data-page="<%= @page_name %>">
+    <div id="flash-message-box"></div>
     <div class="container">
       <%= render 'layouts/weixin_pam/nav_bar' %>
       <%= flash_messages %>

@@ -18,3 +18,13 @@
 //= require bootstrap-sprockets
 //= require ../jquery-sortable.js
 //= require_tree .
+
+function appendFlashMessage(type, message){
+  var el = $('<div class="alert alert-' + type + '"></div>');
+  el.append("<button class='close' data-dismiss='alert'>x</button>")
+  el.append(message);
+  el.appendTo('div#flash-message-box');
+  setTimeout(function(){
+    el.fadeOut(2000, function(){ $(this).remove() });
+  }, 5000);
+}

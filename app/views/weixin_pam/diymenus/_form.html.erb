@@ -1,34 +1,17 @@
-<%= form_for([@public_account, @diymenu]) do |f| %>
-
-  <div class="field">
-    <%= f.label :public_account_id %><br>
-    <%= f.text_field :public_account_id %>
-  </div>
-  <div class="field">
-    <%= f.label :parent_id %><br>
-    <%= f.text_field :parent_id %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :key %><br>
-    <%= f.text_field :key %>
-  </div>
-  <div class="field">
-    <%= f.label :url %><br>
-    <%= f.text_field :url %>
-  </div>
-  <div class="field">
-    <%= f.label :is_show %><br>
-    <%= f.check_box :is_show %>
-  </div>
-  <div class="field">
-    <%= f.label :sort %><br>
-    <%= f.number_field :sort %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<%
+opts = if @diymenu.new_record?
+  { url: public_account_diymenus_path(@public_account) }
+else
+  { url: public_account_diymenu_path(@public_account, @diymenu), method: :patch }
+end
+%>
+<%= simple_form_for @diymenu, opts do |f| %>
+  <%= f.input :name  %>
+  <%= f.input :key  %>
+  <%= f.input :url  %>
+  <%= f.submit '保存', class: 'btn btn-primary' %>
+  <% unless @public_account.new_record? %>
+    <%= link_to '删除', public_account_diymenu_path(@public_account, @diymenu), method: :delete, data: { confirm: '确认要删除吗?' }, class: 'btn btn-danger'  %>
+  <% end %>
+  <%= link_to '返回', public_account_diymenus_path(@public_account), class: 'btn btn-default'  %>
 <% end %>

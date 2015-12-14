@@ -1,20 +1,35 @@
 h1 #{@public_account.name} - 微信菜单
-.row
-  .col-md-6
-    h3 当前菜单
-    ol.parent-menus.sortMenu
-      - @diymenus.where(parent_id: nil, is_show: true).order('sort').each do |parent_menu|
-        li[data-id=parent_menu.id data-name=parent_menu.name data-date=parent_menu.created_at]
-          i.glyphicon.glyphicon-move
-          = parent_menu.name
-          ol.sub-menus
-            - parent_menu.diymenus.where(is_show: true).order('sort').each do |sub_menu|
-              li[data-id=sub_menu.id data-name=sub_menu.name data-date=parent_menu.created_at]
-                i.glyphicon.glyphicon-move
-                = sub_menu.name
-  .col-md-6
-    h3 未启用的菜单
-    ol.parent-menus.sortMenu
+= form_tag sort_public_account_diymenus_path(@public_account), id: 'form-sort-diymenu', remote: true do |f|
+  = hidden_field_tag :state
+  .row
+    .col-md-6
+      h3 当前菜单
+      ol.parent-menus.sortMenu
+        - @diymenus.where(parent_id: nil, is_show: true).order('sort').each do |parent_menu|
+          li[data-id=parent_menu.id]
+            => fa_icon('arrows')
+            = link_to parent_menu.displayable_name, edit_public_account_diymenu_path(@public_account, parent_menu)
+            ol.sub-menus
+              - parent_menu.diymenus.where(is_show: true).order('sort').each do |sub_menu|
+                li[data-id=sub_menu.id]
+                  => fa_icon('arrows')
+                  = link_to sub_menu.displayable_name, edit_public_account_diymenu_path(@public_account, sub_menu)
+    .col-md-6
+      h3 未启用的菜单
+      ol.parent-menus.sortMenu
+        - @diymenus.where(parent_id: nil, is_show: false).order('sort').each do |parent_menu|
+          li[data-id=parent_menu.id]
+            => fa_icon('arrows')
+            = link_to parent_menu.displayable_name, edit_public_account_diymenu_path(@public_account, parent_menu)
+            ol.sub-menus
+              - parent_menu.diymenus.order('sort').each do |sub_menu|
+                li[data-id=sub_menu.id]
+                  => fa_icon('arrows')
+                  = link_to sub_menu.displayable_name, edit_public_account_diymenu_path(@public_account, sub_menu)
+  => button_tag fa_icon('floppy-o', text: "保存当前排序"), class: 'btn btn-primary', data: { disable_with: "<i class='fa fa-spin fa-cog'></i> 保存中..." }
+  => link_to fa_icon('cloud-upload', text: '上传到公众号菜单'), upload_public_account_diymenus_path(@public_account), class: 'btn btn-success', id: 'upload-menu-to-weixin', remote: true, method: :post,  data: { confirm: '确定要把当前菜单设置更新到公众号吗？' }
+  => link_to fa_icon('pencil', text: '添加菜单'), new_public_account_diymenu_path(@public_account), class: 'btn btn-default'
+  = link_to fa_icon('reply', text: '返回'), public_account_path(@public_account), class: 'btn btn-default'
+
+br
 pre.output
-p
-  = link_to 'New Diymenu', new_public_account_diymenu_path(@public_account)
