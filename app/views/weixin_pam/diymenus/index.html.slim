@@ -26,10 +26,7 @@ h1 #{@public_account.name} - 微信菜单
                 li[data-id=sub_menu.id]
                   => fa_icon('arrows')
                   = link_to sub_menu.displayable_name, edit_public_account_diymenu_path(@public_account, sub_menu)
-  => button_tag fa_icon('floppy-o', text: "保存当前排序"), class: 'btn btn-primary', data: { disable_with: "<i class='fa fa-spin fa-cog'></i> 保存中..." }
-  => link_to fa_icon('cloud-upload', text: '上传到公众号菜单'), upload_public_account_diymenus_path(@public_account), class: 'btn btn-success', id: 'upload-menu-to-weixin', remote: true, method: :post,  data: { confirm: '确定要把当前菜单设置更新到公众号吗？' }
+  => link_to fa_icon('cloud-upload', text: '上传到公众号菜单'), upload_public_account_diymenus_path(@public_account), class: 'btn btn-success', id: 'upload-menu-to-weixin', remote: true, method: :post,  data: { confirm: '确定要把当前菜单设置更新到公众号吗？', disable_with: "<i class='fa fa-spin fa-cog'></i> 正在上传中..." }
+  => link_to fa_icon('cloud-download', text: '下载公众号菜单'), download_public_account_diymenus_path(@public_account), class: 'btn btn-danger', id: 'upload-menu-to-weixin', remote: true, method: :post,  data: { confirm: '确定要下载公众号菜单吗？下载后，当前页面上的菜档将被放入“未启用”队列', disable_with: "<i class='fa fa-spin fa-cog'></i> 正在下载中..." }
   => link_to fa_icon('pencil', text: '添加菜单'), new_public_account_diymenu_path(@public_account), class: 'btn btn-default'
   = link_to fa_icon('reply', text: '返回'), public_account_path(@public_account), class: 'btn btn-default'
-
-br
-pre.output

@@ -4,6 +4,7 @@ WeixinPam::Engine.routes.draw do
       collection do
         post :sort
         post :upload
+        post :download
       end
     end
     resources :user_accounts

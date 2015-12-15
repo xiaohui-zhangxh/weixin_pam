@@ -42,7 +42,7 @@ module WeixinPam
     # DELETE /diymenus/1
     def destroy
       @diymenu.destroy
-      redirect_to public_account_diymenus_path(@public_account), notice: 'Diymenu was successfully destroyed.'
+      redirect_to public_account_diymenus_path(@public_account), notice: '删除菜单成功.'
     end
 
     def sort
@@ -61,6 +61,12 @@ module WeixinPam
         ok: result.ok?,
         msg: result.cn_msg
       }
+    end
+
+    def download
+      @public_account.download_menu!
+      flash[:notice] = '下载成功.'
+      render js: "Turbolinks.visit('#{public_account_diymenus_path(@public_account)}');"
     end
 
     private
@@ -86,7 +92,7 @@ module WeixinPam
 
       # Only allow a trusted parameter "white list" through.
       def diymenu_params
-        params.require(:diymenu).permit(:parent_id, :name, :key, :url, :is_show, :sort)
+        params.require(:diymenu).permit(:button_type, :name, :key, :url, :is_show, :sort)
       end
   end
 end

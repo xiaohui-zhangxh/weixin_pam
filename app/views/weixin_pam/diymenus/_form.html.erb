@@ -1,16 +1,17 @@
 <%
 opts = if @diymenu.new_record?
-  { url: public_account_diymenus_path(@public_account) }
+  { url: public_account_diymenus_path(@public_account), method: :post }
 else
   { url: public_account_diymenu_path(@public_account, @diymenu), method: :patch }
 end
 %>
 <%= simple_form_for @diymenu, opts do |f| %>
   <%= f.input :name  %>
+  <%= f.input :button_type, as: :select, collection: WeixinPam::Diymenu::BUTTON_TYPES.map { |k, v| ["#{k} - #{v}", k] }  %>
   <%= f.input :key  %>
   <%= f.input :url  %>
   <%= f.submit '保存', class: 'btn btn-primary' %>
-  <% unless @public_account.new_record? %>
+  <% unless @diymenu.new_record? %>
     <%= link_to '删除', public_account_diymenu_path(@public_account, @diymenu), method: :delete, data: { confirm: '确认要删除吗?' }, class: 'btn btn-danger'  %>
   <% end %>
   <%= link_to '返回', public_account_diymenus_path(@public_account), class: 'btn btn-default'  %>

@@ -3,9 +3,9 @@
 
 $(document).ready(function(){
   if($('body[data-page="diymenus_index"]')[0]) {
-    var sortMenuEle, sortGroup, oldSortMenuResult, newSortMenuResult;
-
-    $('form#form-sort-diymenu').on('ajax:success', function(data, status, xhr){
+    var formEle, sortMenuEle, sortGroup;
+    formEle = $('form#form-sort-diymenu');
+    formEle.on('ajax:success', function(data, status, xhr){
       switch(status.action){
         case 'upload':
           if(status.ok)
@@ -14,7 +14,6 @@ $(document).ready(function(){
             appendFlashMessage('danger', '上传失败，失败原因：' + status.msg);
           break;
         case 'sort':
-          initSortMenuResult();
           appendFlashMessage('success', '微信菜单保存成功');
           break;
         default:
@@ -24,15 +23,6 @@ $(document).ready(function(){
     }).on('ajax:error', function(xhr, status, error){
       appendFlashMessage('danger', '请求失败');
     });
-
-    $('a#upload-menu-to-weixin').click(function(e){
-      if(oldSortMenuResult != newSortMenuResult){
-        alert('上传前请先点击保存按钮，否则菜单不会被更新');
-        e.preventDefault();
-        return false;
-      }
-      return true;
-    })
 
     function setSubMenusMargin() {
       $('ol.sub-menus').css('margin-top', '0px');
@@ -57,10 +47,6 @@ $(document).ready(function(){
       }
     }
 
-    function initSortMenuResult(){
-      oldSortMenuResult = newSortMenuResult = JSON.stringify(sortGroup.sortable("serialize").get()[0], null, ' ');
-    }
-
     sortMenuEle = $('ol.sortMenu');
     sortGroup = sortMenuEle.sortable({
       clear: true,
@@ -74,11 +60,9 @@ $(document).ready(function(){
         var data = sortGroup.sortable("serialize").get();
         var jsonString = JSON.stringify(data, null, ' ');
         
-        $('form#form-sort-diymenu input[name="state"]').val(jsonString);
-        $('pre.output').text(jsonString);
+        formEle.find('input[name="state"]').val(jsonString);
+        formEle.submit();
 
-        newSortMenuResult = JSON.stringify(data[0], null, ' ');
-        console.log('newSortMenuResult=' + newSortMenuResult);
         _super($item, container);
       },
       isValidTarget: function ($item, container) {
@@ -97,7 +81,6 @@ $(document).ready(function(){
         return true;
       }
     });
-    initSortMenuResult();
     setSubMenusMargin();
   }
 })

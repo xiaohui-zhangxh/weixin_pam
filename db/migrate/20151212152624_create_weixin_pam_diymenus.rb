@@ -3,11 +3,12 @@ class CreateWeixinPamDiymenus < ActiveRecord::Migration
     create_table :weixin_pam_diymenus do |t|
       t.references :public_account, index: true
       t.references :parent
-      t.string :name
+      t.integer :button_type
+      t.string :name, null: false
       t.string :key
-      t.string :url
-      t.boolean :is_show
-      t.integer :sort
+      t.string :url, limit: 128
+      t.boolean :is_show, default: false, null: false
+      t.integer :sort, default: 1, null: false
 
       t.timestamps null: false
     end
