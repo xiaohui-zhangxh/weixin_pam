@@ -1,16 +1,15 @@
 <h1>基本信息
 <%= link_to '编辑', edit_public_account_path(@public_account), class: 'btn btn-warning' %> 
+<%= link_to '微信菜单', public_account_diymenus_path(@public_account), class: 'btn btn-default' %> 
 <%= link_to '返回', public_accounts_path, class: 'btn btn-default'  %>
 </h1>
 <table class="table table-striped">
-  <% %w(name app_id app_secret api_url api_token enabled).each do |attr| %>
+  <% %w(name app_id app_secret api_url api_token weixin_secret_key weixin_token enabled).each do |attr| %>
     <tr>
       <th><%= WeixinPam::PublicAccount.human_attribute_name attr %></th>
-      <td><%= @public_account.send attr %></td>
+      <td><%= attr == 'weixin_secret_key' ? weixin_engine.weixin_server_url(@public_account.weixin_secret_key) : @public_account.send(attr) %></td>
     </tr>
   <% end %>
 </table>
-
 <h1>操作</h1>
 
-<%= link_to '微信菜单', public_account_diymenus_path(@public_account), class: 'btn btn-default' %> 

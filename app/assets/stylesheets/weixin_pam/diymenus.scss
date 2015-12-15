@@ -4,7 +4,7 @@
 
 ol.parent-menus{
   list-style-type: none;
-  border: 3px solid #666666;
+  border: 2px solid #bebebe;
   padding: 10px;
   > li{
     display: block;
@@ -12,7 +12,7 @@ ol.parent-menus{
     border-width: 1px;
     border-color: green;
     border-bottom-style: none;
-    background-color: #d9ffd6;
+    background-color: #fcfff4;
     padding: 10px;
     i.glyphicon{
       margin-right: 10px;
@@ -28,7 +28,7 @@ ol.parent-menus{
 
 ol.sub-menus{
   list-style-type: none;
-  border: 3px solid #666666;
+  border: 2px solid #bebebe;
   padding: 10px;
   margin-left: 22px;
   > li{

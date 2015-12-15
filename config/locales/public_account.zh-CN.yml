@@ -7,6 +7,8 @@
         name: 公众号名称
         app_id: AppID(应用ID)
         app_secret: AppSecret(应用密钥)
-        api_url: URL(服务器地址)
-        api_token: Token(令牌)
+        api_url: URL(原始服务器地址)
+        api_token: Token(原始令牌)
+        weixin_secret_key: URL(新服务器地址)
+        weixin_token: Token(新令牌)
         enabled: 启用

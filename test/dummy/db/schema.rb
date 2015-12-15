@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151212152624) do
+ActiveRecord::Schema.define(version: 20151215140830) do
 
   create_table "weixin_pam_diymenus", force: :cascade do |t|
     t.integer  "public_account_id"
@@ -35,9 +35,14 @@ ActiveRecord::Schema.define(version: 20151212152624) do
     t.string   "api_url"
     t.string   "api_token"
     t.boolean  "enabled"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.string   "weixin_secret_key"
+    t.string   "weixin_token"
   end
+
+  add_index "weixin_pam_public_accounts", ["weixin_secret_key"], name: "index_weixin_pam_public_accounts_on_weixin_secret_key"
+  add_index "weixin_pam_public_accounts", ["weixin_token"], name: "index_weixin_pam_public_accounts_on_weixin_token"
 
   create_table "weixin_pam_user_accounts", force: :cascade do |t|
     t.integer  "public_account_id"

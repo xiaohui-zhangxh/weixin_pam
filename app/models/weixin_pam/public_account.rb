@@ -1,6 +1,8 @@
 require 'weixin_pam/api_error'
 module WeixinPam
   class PublicAccount < ActiveRecord::Base
+    include WeixinRailsMiddleware::AutoGenerateWeixinTokenSecretKey
+
     has_many :user_accounts, dependent: :destroy
     has_many :diymenus, dependent: :destroy
     has_many :parent_menus, -> { includes(:sub_menus).where(parent_id: nil, is_show: true).order("sort").limit(3) }, class_name: "WeixinPam::Diymenu", foreign_key: :public_account_id
@@ -9,6 +11,10 @@ module WeixinPam
 
     def client
       @client ||= WeixinAuthorize::Client.new(app_id, app_secret)
+    end
+
+    def reply_weixin(message, keyword)
+      reply_class.constantize.new(self, message, keyword).reply
     end
 
     def build_menu
@@ -66,5 +72,6 @@ module WeixinPam
         end
       end
     end
+
   end
 end

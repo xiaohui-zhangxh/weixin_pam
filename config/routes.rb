@@ -9,4 +9,5 @@ WeixinPam::Engine.routes.draw do
     end
     resources :user_accounts
   end
+  mount WeixinRailsMiddleware::Engine, at: "/"
 end

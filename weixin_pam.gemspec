@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sprockets-rails", "> 2.1.4"
   s.add_dependency 'jquery-turbolinks'
   s.add_dependency 'weixin_authorize'
+  s.add_dependency 'weixin_rails_middleware'
   s.add_dependency "redis-namespace"
 
   s.add_development_dependency "sqlite3"
