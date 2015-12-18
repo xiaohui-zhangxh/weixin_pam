@@ -6,8 +6,8 @@ module WeixinPam
     has_many :user_accounts, dependent: :destroy
     has_many :diymenus, dependent: :destroy
     has_many :parent_menus, -> { includes(:sub_menus).where(parent_id: nil, is_show: true).order("sort").limit(3) }, class_name: "WeixinPam::Diymenu", foreign_key: :public_account_id
-    # has_many :enabled_parent_menus, -> { includes(:sub_menus).where(parent_id: nil, is_show: true).order("sort") }, class_name: "WeixinPam::Diymenu", foreign_key: :public_account_id
-    # has_many :disabled_parent_menus, -> { includes(:sub_menus).where(parent_id: nil, is_show: false).order("sort") }, class_name: "WeixinPam::Diymenu", foreign_key: :public_account_id
+
+    before_save :set_default_values
 
     def client
       @client ||= WeixinAuthorize::Client.new(app_id, app_secret)
@@ -73,5 +73,10 @@ module WeixinPam
       end
     end
 
+    private
+
+    def set_default_values
+      self.reply_class = 'CommonWeixinReplyService' if reply_class.blank?
+    end
   end
 end

@@ -1,6 +1,14 @@
 require 'weixin_rails_middleware/helpers/reply_weixin_message_helper'
 module WeixinPam
   class PublicAccountReply
+
+    class KeyEventCallback
+      attr_accessor :key, :callback, :description
+      def execute
+        callback.call
+      end
+    end
+
     include WeixinRailsMiddleware::ReplyWeixinMessageHelper
     attr_reader :weixin_public_account, :weixin_message, :keyword
 
@@ -8,10 +16,36 @@ module WeixinPam
       @weixin_public_account = public_account
       @weixin_message = message
       @keyword = keyword
+      @key_event_callbacks = []
     end
 
     def reply
+      Rails.logger.debug
+      Rails.logger.debug @weixin_message.inspect
+      Rails.logger.debug
+      Rails.logger.debug "@keyword = #{@keyword.inspect}"
+      Rails.logger.debug
       send("response_#{@weixin_message.MsgType}_message")
+    end
+
+    protected
+
+    def key_event_desc(desc)
+      @current_key_event = KeyEventCallback.new
+      @current_key_event.description = desc
+    end
+
+    def define_key_event(key, &block)
+      @current_key_event ||= KeyEventCallback.new
+      @current_key_event.key = key.intern
+      @current_key_event.callback = block
+      @key_event_callbacks.push(@key_event_callbacks)
+      @current_key_event = nil
+    end
+
+    def find_key_event(key)
+      key = key.to_s.intern
+      @key_event_callbacks.find { |ke| ke.key == key }
     end
 
     private
@@ -76,6 +110,7 @@ module WeixinPam
 
     # 关注公众账号
     def handle_subscribe_event
+      @weixin_public_account.update_attributes subscribed: true
       if @keyword.present?
         # 扫描带参数二维码事件: 1. 用户未关注时，进行关注后的事件推送
         return reply_text_message("扫描带参数二维码事件: 1. 用户未关注时，进行关注后的事件推送, keyword: #{@keyword}")
@@ -85,7 +120,9 @@ module WeixinPam
 
     # 取消关注
     def handle_unsubscribe_event
+      @weixin_public_account.update_attributes subscribed: false
       Rails.logger.info("取消关注")
+      ''
     end
 
     # 扫描带参数二维码事件: 2. 用户已关注时的事件推送
@@ -102,12 +139,28 @@ module WeixinPam
 
     # 点击菜单拉取消息时的事件推送
     def handle_click_event
-      reply_text_message("你点击了: #{@keyword}")
+      key_event = find_key_event(@keyword)
+      if key_event
+        key_event.execute
+      else
+        reply_text_message(Rails.env.production? ? "" : "你点击了: #{@keyword}")
+      end
     end
 
     # 点击菜单跳转链接时的事件推送
     def handle_view_event
       Rails.logger.info("你点击了: #{@keyword}")
+      ''
+    end
+
+    # 弹出系统拍照发图
+    def handle_pic_sysphoto_event
+      ''
+    end
+
+    # 弹出拍照或者相册发图的事件推送
+    def handle_pic_photo_or_album_event
+      ''
     end
 
     # 帮助文档: https://github.com/lanrion/weixin_authorize/issues/22
@@ -131,6 +184,7 @@ module WeixinPam
     # </xml>
     def handle_masssendjobfinish_event
       Rails.logger.info("回调事件处理")
+      ''
     end
   end
 end

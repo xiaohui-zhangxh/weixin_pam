@@ -27,7 +27,7 @@ module WeixinPam
       @public_account = PublicAccount.new(public_account_params)
 
       if @public_account.save
-        redirect_to @public_account, notice: 'Public account was successfully created.'
+        redirect_to @public_account, notice: '公众号创建成功.'
       else
         render :new
       end
@@ -36,7 +36,7 @@ module WeixinPam
     # PATCH/PUT /public_accounts/1
     def update
       if @public_account.update(public_account_params)
-        redirect_to @public_account, notice: 'Public account was successfully updated.'
+        redirect_to @public_account, notice: '公众号修改成功.'
       else
         render :edit
       end
@@ -45,7 +45,7 @@ module WeixinPam
     # DELETE /public_accounts/1
     def destroy
       @public_account.destroy
-      redirect_to public_accounts_url, notice: 'Public account was successfully destroyed.'
+      redirect_to public_accounts_url, notice: '成功删除公众号.'
     end
 
     private
@@ -56,7 +56,7 @@ module WeixinPam
 
       # Only allow a trusted parameter "white list" through.
       def public_account_params
-        params.require(:public_account).permit(:name, :app_id, :app_secret, :api_url, :api_token, :enabled)
+        params.require(:public_account).permit(:name, :app_id, :app_secret, :api_url, :api_token, :enabled, :host)
       end
   end
 end

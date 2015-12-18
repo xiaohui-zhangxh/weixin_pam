@@ -4,8 +4,13 @@ class CreateWeixinPamUserAccounts < ActiveRecord::Migration
       t.references :public_account, index: true
       t.string :uid
       t.string :nickname
-      t.string :headshot
-      t.boolean :subscribed
+      t.string :sex
+      t.string :province
+      t.string :city
+      t.string :country
+      t.string :headimgurl
+      t.boolean :subscribed, default: false, null: false
+      t.string :headimg_fingerprint, limit: 32
 
       t.timestamps null: false
     end

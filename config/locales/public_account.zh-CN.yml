@@ -11,4 +11,5 @@
         api_token: Token(原始令牌)
         weixin_secret_key: URL(新服务器地址)
         weixin_token: Token(新令牌)
+        host: 网页授权的主机名
         enabled: 启用
