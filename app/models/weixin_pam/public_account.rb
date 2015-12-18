@@ -14,7 +14,7 @@ module WeixinPam
     end
 
     def reply_weixin(message, keyword)
-      reply_class.constantize.new(self, message, keyword).reply
+      klass = reply_class.present? ? reply_class.constantize : PublicAccountReply .new(self, message, keyword).reply
     end
 
     def build_menu

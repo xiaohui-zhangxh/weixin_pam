@@ -12,4 +12,5 @@
         weixin_secret_key: URL(新服务器地址)
         weixin_token: Token(新令牌)
         host: 网页授权的主机名
+        reply_class: 微信服务器事件推送的响应Class
         enabled: 启用

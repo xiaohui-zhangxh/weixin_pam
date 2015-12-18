@@ -4,7 +4,7 @@
 <%= link_to '返回', public_accounts_path, class: 'btn btn-default'  %>
 </h1>
 <table class="table table-striped">
-  <% %w(name app_id app_secret api_url api_token weixin_secret_key weixin_token host enabled).each do |attr| %>
+  <% %w(name app_id app_secret api_url api_token weixin_secret_key weixin_token host reply_class enabled).each do |attr| %>
     <tr>
       <th><%= WeixinPam::PublicAccount.human_attribute_name attr %></th>
       <%- url_options = @public_account.host.present? ? { host: @public_account.host, port: nil } : {} %>
