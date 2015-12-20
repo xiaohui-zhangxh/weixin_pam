@@ -5,6 +5,11 @@
 WeixinRailsMiddleware::WeixinController.class_eval do
 
   def reply
+    Rails.logger.debug
+    Rails.logger.debug @weixin_message.inspect
+    Rails.logger.debug
+    Rails.logger.debug "@keyword = #{@keyword.inspect}"
+    Rails.logger.debug
     render xml: @weixin_public_account.reply_weixin(@weixin_message, @keyword)
   end
 

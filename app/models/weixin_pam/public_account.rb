@@ -14,7 +14,8 @@ module WeixinPam
     end
 
     def reply_weixin(message, keyword)
-      klass = reply_class.present? ? reply_class.constantize : PublicAccountReply .new(self, message, keyword).reply
+      klass = reply_class.present? ? reply_class.constantize : PublicAccountReply
+      klass.new(self, message, keyword).reply
     end
 
     def build_menu
@@ -71,6 +72,10 @@ module WeixinPam
           sub_menu.save! if sub_menu.changed?
         end
       end
+    end
+
+    def temp_qrcode
+      client.qr_code_url(client.create_qr_scene(1).result['ticket'])
     end
 
     private
