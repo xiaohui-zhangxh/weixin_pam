@@ -56,7 +56,7 @@ module WeixinPam
 
       # Only allow a trusted parameter "white list" through.
       def public_account_params
-        params.require(:public_account).permit(:name, :app_id, :app_secret, :api_url, :api_token, :enabled, :host)
+        params.require(:public_account).permit(:name, :app_id, :app_secret, :api_url, :api_token, :enabled, :host, :reply_class)
       end
   end
 end
