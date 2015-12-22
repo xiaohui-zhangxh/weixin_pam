@@ -1,6 +1,7 @@
 <h1>基本信息
 <%= link_to '编辑', edit_public_account_path(@public_account), class: 'btn btn-warning' %> 
 <%= link_to '微信菜单', public_account_diymenus_path(@public_account), class: 'btn btn-default' %> 
+<%= link_to '微信用户', public_account_user_accounts_path(@public_account), class: 'btn btn-default' %> 
 <%= link_to '返回', public_accounts_path, class: 'btn btn-default'  %>
 </h1>
 <table class="table table-striped">

@@ -1,0 +1,25 @@
+h1
+  | #{@public_account.name} - 微信用户
+  =<> link_to fa_icon('cloud-download', text: '同步用户信息'), sync_public_account_user_accounts_path(@public_account), class: 'btn btn-danger sync-users', remote: true, method: :post,  data: { confirm: '确定要同步用户吗？', disable_with: "<i class='fa fa-spin fa-cog'></i> 正在同步中..." }
+  = link_to fa_icon('reply', text: '返回'), public_account_path(@public_account), class: 'btn btn-default'
+
+table.table.table-striped
+  thead
+    tr
+      th = WeixinPam::UserAccount.human_attribute_name :subscribed
+      th = WeixinPam::UserAccount.human_attribute_name :headimgurl
+      th = WeixinPam::UserAccount.human_attribute_name :nickname
+      th = WeixinPam::UserAccount.human_attribute_name :sex
+      th = WeixinPam::UserAccount.human_attribute_name :province
+      th = WeixinPam::UserAccount.human_attribute_name :city
+      th = WeixinPam::UserAccount.human_attribute_name :country
+  tbody
+    - @user_accounts.each do |user|
+      tr
+        td = user.subscribed ? 'Y' : 'N'
+        td = image_tag(user.headimgurl, width: 32, height: 32)
+        td = user.nickname
+        td = user.sex
+        td = user.province
+        td = user.city
+        td = user.country

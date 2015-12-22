@@ -1,0 +1,13 @@
+'zh-CN':
+  activerecord:
+    models:
+      weixin_pam/user_account: 微信用户
+    attributes:
+      weixin_pam/user_account:
+        nickname: 昵称
+        sex: 性别
+        province: 省份
+        city: 城市
+        country: 国家
+        headimgurl: 头像
+        subscribed: 关注

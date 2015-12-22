@@ -7,7 +7,11 @@ WeixinPam::Engine.routes.draw do
         post :download
       end
     end
-    resources :user_accounts
+    resources :user_accounts, only: [:index] do
+      collection do
+        post :sync
+      end
+    end
   end
   mount WeixinRailsMiddleware::Engine, at: "/"
 end
