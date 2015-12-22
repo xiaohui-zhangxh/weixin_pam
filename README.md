@@ -138,3 +138,19 @@ end
 创建的公众号如果不填写"微信服务器事件推送的响应Class",WeixinPam会使用开发模式下的默认值PublicAccountReply（lib/public_account_reply.rb）
 
 针对不同公众号，我们可以编写不同的Reply Class去继承PublicAccountReply,实现不同公众号有不同的回复内容。
+
+## 用Devise保护资源
+
+添加config/initializers/weixin_pam.rb,加入如下代码
+```
+
+WeixinPam::ApplicationController.class_eval do
+  before_action :authenticate_user!
+  before_action :ensure_admin_user
+
+  private
+
+  def ensure_admin_user
+    fail "没有访问权限" unless current_user.admin?
+  end
+end
