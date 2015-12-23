@@ -67,6 +67,8 @@ module WeixinPam
       @public_account.download_menu!
       flash[:notice] = '下载成功.'
       render js: "Turbolinks.visit('#{public_account_diymenus_path(@public_account)}');"
+    rescue ApiError::FailedResult => ex
+      render json: { action: :download, error: "#{ex.message} - #{ex.result.cn_msg}" }
     end
 
     private

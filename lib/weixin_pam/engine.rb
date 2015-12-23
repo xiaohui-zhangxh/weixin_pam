@@ -3,6 +3,7 @@ module WeixinPam
     isolate_namespace WeixinPam
 
     require_relative 'public_account_reply'
+    require_relative 'api_error'
 
     require 'bootstrap-sass'
     require 'sass-rails'

@@ -1,4 +1,4 @@
-require 'weixin_pam/api_error'
+
 module WeixinPam
   class PublicAccount < ActiveRecord::Base
     include WeixinRailsMiddleware::AutoGenerateWeixinTokenSecretKey

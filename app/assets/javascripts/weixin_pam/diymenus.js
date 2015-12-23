@@ -16,6 +16,10 @@ $(document).ready(function(){
         case 'sort':
           appendFlashMessage('success', '微信菜单保存成功');
           break;
+        case 'download':
+          if(status.error)
+            appendFlashMessage('danger', '下载失败，失败原因：' + status.error);
+          break;
         default:
           appendFlashMessage('success', '请求成功');
           break;
