@@ -10,12 +10,13 @@ module WeixinPam
     end
 
     include WeixinRailsMiddleware::ReplyWeixinMessageHelper
-    attr_reader :weixin_public_account, :weixin_message, :keyword
+    attr_reader :weixin_public_account, :weixin_message, :keyword, :weixin_user_account
 
-    NO_CONTENT = 'success'.freeze
+    NO_CONTENT = :no_content
 
     def initialize(public_account, message, keyword)
       @weixin_public_account = public_account
+      @weixin_user_account = public_account.user_accounts.find_by(uid: message.FromUserName)
       @weixin_message = message
       @keyword = keyword
       @key_event_callbacks = []
@@ -24,8 +25,6 @@ module WeixinPam
     def reply
       send("response_#{@weixin_message.MsgType}_message")
     end
-
-    protected
 
     def key_event_desc(desc)
       @current_key_event = KeyEventCallback.new
@@ -44,8 +43,6 @@ module WeixinPam
       key = key.to_s.intern
       @key_event_callbacks.find { |ke| ke.key == key }
     end
-
-    private
 
     def response_text_message
       reply_with_dev_message(reply_text_message("Your Message: #{@keyword}"))

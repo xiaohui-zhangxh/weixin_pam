@@ -5,12 +5,27 @@
 WeixinRailsMiddleware::WeixinController.class_eval do
 
   def reply
+    Rails.logger.debug "========== Request ============"
     Rails.logger.debug
     Rails.logger.debug @weixin_message.inspect
     Rails.logger.debug
     Rails.logger.debug "@keyword = #{@keyword.inspect}"
     Rails.logger.debug
-    render xml: @weixin_public_account.reply_weixin(@weixin_message, @keyword)
+    Rails.logger.debug "==============================="
+
+    response_data = @weixin_public_account.reply_weixin(@weixin_message, @keyword)
+
+    Rails.logger.debug "========== Response ==========="
+    Rails.logger.debug
+    Rails.logger.debug response_data.inspect
+    Rails.logger.debug
+    Rails.logger.debug "==============================="
+
+    if response_data == :no_content
+      render text: 'success'
+    else
+      render xml: response_data
+    end
   end
 
 end
