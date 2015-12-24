@@ -12,6 +12,8 @@ module WeixinPam
     include WeixinRailsMiddleware::ReplyWeixinMessageHelper
     attr_reader :weixin_public_account, :weixin_message, :keyword
 
+    NO_CONTENT = 'success'.freeze
+
     def initialize(public_account, message, keyword)
       @weixin_public_account = public_account
       @weixin_message = message
@@ -121,7 +123,7 @@ module WeixinPam
     # 取消关注
     def handle_unsubscribe_event
       Rails.logger.info("取消关注")
-      ''
+      NO_CONTENT
     end
 
     # 扫描带参数二维码事件: 2. 用户已关注时的事件推送
@@ -149,17 +151,17 @@ module WeixinPam
     # 点击菜单跳转链接时的事件推送
     def handle_view_event
       Rails.logger.info("你点击了: #{@keyword}")
-      ''
+      NO_CONTENT
     end
 
     # 弹出系统拍照发图
     def handle_pic_sysphoto_event
-      ''
+      NO_CONTENT
     end
 
     # 弹出拍照或者相册发图的事件推送
     def handle_pic_photo_or_album_event
-      ''
+      NO_CONTENT
     end
 
     # 帮助文档: https://github.com/lanrion/weixin_authorize/issues/22
@@ -183,11 +185,16 @@ module WeixinPam
     # </xml>
     def handle_masssendjobfinish_event
       Rails.logger.info("回调事件处理")
-      ''
+      NO_CONTENT
+    end
+
+    def handle_templatesendjobfinish_event
+      Rails.logger.info("回调模板任务")
+      NO_CONTENT
     end
 
     def reply_with_dev_message(msg)
-      Rails.env.development? ? msg : ''
+      Rails.env.development? ? msg : NO_CONTENT
     end
   end
 end

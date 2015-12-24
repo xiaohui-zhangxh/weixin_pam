@@ -74,8 +74,8 @@ module WeixinPam
       end
     end
 
-    def temp_qrcode
-      client.qr_code_url(client.create_qr_scene(1).result['ticket'])
+    def temp_qrcode(sence_id = 1)
+      client.qr_code_url(client.create_qr_scene(sence_id).result['ticket'])
     end
 
     private
