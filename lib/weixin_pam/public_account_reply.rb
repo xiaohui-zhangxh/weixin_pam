@@ -46,7 +46,7 @@ module WeixinPam
 
     def initialize(public_account, message, keyword)
       @weixin_public_account = public_account
-      @weixin_user_account = public_account.user_accounts.find_by(uid: message.FromUserName)
+      @weixin_user_account = public_account.user_accounts.find_or_create_by!(uid: message.FromUserName)
       @weixin_message = message
       @keyword = keyword
     end

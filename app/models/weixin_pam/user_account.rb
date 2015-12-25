@@ -1,7 +1,10 @@
 module WeixinPam
   class UserAccount < ActiveRecord::Base
     belongs_to :public_account
+    before_save :populate_with_api_info, on: :create, if: -> { nickname.blank? && headimgurl.blank? }
     before_save :set_headimg_fingerprint
+    validates_presence_of :uid, scope: [:public_account]
+    validates_uniqueness_of :uid, scope: [:public_account]
 
     def self.from_omniauth(public_account, auth, auto_create = true)
       public_account.user_accounts.where(uid: auth.uid).send(auto_create ? "first_or_create" : "first_or_initialize") do |u|
