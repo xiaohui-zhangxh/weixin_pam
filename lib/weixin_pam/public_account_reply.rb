@@ -4,10 +4,40 @@ module WeixinPam
 
     class KeyEventCallback
       attr_accessor :key, :callback, :description
-      def execute
-        callback.call
+      def execute(service)
+        callback.call(service)
       end
     end
+
+    module KeyEventMethods
+      extend ActiveSupport::Concern
+
+      def find_key_event(key)
+        key = key.to_s.intern
+        self.class.key_event_callbacks.find { |ke| ke.key == key }
+      end
+
+      class_methods do
+        def key_event_callbacks
+          @key_event_callbacks ||= []
+        end
+
+        def key_event_desc(desc)
+          @current_key_event = KeyEventCallback.new
+          @current_key_event.description = desc
+        end
+
+        def define_key_event(key, &block)
+          @current_key_event ||= KeyEventCallback.new
+          @current_key_event.key = key.intern
+          @current_key_event.callback = block
+          key_event_callbacks.push(@current_key_event)
+          @current_key_event = nil
+        end
+      end
+    end
+
+    include KeyEventMethods
 
     include WeixinRailsMiddleware::ReplyWeixinMessageHelper
     attr_reader :weixin_public_account, :weixin_message, :keyword, :weixin_user_account
@@ -19,29 +49,10 @@ module WeixinPam
       @weixin_user_account = public_account.user_accounts.find_by(uid: message.FromUserName)
       @weixin_message = message
       @keyword = keyword
-      @key_event_callbacks = []
     end
 
     def reply
       send("response_#{@weixin_message.MsgType}_message")
-    end
-
-    def key_event_desc(desc)
-      @current_key_event = KeyEventCallback.new
-      @current_key_event.description = desc
-    end
-
-    def define_key_event(key, &block)
-      @current_key_event ||= KeyEventCallback.new
-      @current_key_event.key = key.intern
-      @current_key_event.callback = block
-      @key_event_callbacks.push(@key_event_callbacks)
-      @current_key_event = nil
-    end
-
-    def find_key_event(key)
-      key = key.to_s.intern
-      @key_event_callbacks.find { |ke| ke.key == key }
     end
 
     def response_text_message
@@ -139,7 +150,7 @@ module WeixinPam
     def handle_click_event
       key_event = find_key_event(@keyword)
       if key_event
-        key_event.execute
+        key_event.execute(self)
       else
         reply_with_dev_message(reply_text_message("你点击了: #{@keyword}"))
       end
@@ -158,6 +169,11 @@ module WeixinPam
 
     # 弹出拍照或者相册发图的事件推送
     def handle_pic_photo_or_album_event
+      NO_CONTENT
+    end
+
+    # 扫码事件
+    def handle_scancode_push_event
       NO_CONTENT
     end
 
