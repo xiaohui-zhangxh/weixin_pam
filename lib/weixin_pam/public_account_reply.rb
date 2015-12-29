@@ -108,6 +108,15 @@ module WeixinPam
       reply_with_dev_message(reply_text_message("回复视频信息"))
     end
 
+    # <MediaId><![CDATA[media_id]]></MediaId>
+    # <ThumbMediaId><![CDATA[thumb_media_id]]></ThumbMediaId>
+    def response_shortvideo_message
+      @media_id = @weixin_message.MediaId # 可以调用多媒体文件下载接口拉取数据。
+      # 视频消息缩略图的媒体id，可以调用多媒体文件下载接口拉取数据。
+      @thumb_media_id = @weixin_message.ThumbMediaId
+      reply_with_dev_message(reply_text_message("回复短视频信息"))
+    end
+
     def response_event_message
       event_type = @weixin_message.Event
       case event_type.downcase

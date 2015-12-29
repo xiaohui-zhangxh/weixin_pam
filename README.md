@@ -139,6 +139,15 @@ end
 
 针对不同公众号，我们可以编写不同的Reply Class去继承PublicAccountReply,实现不同公众号有不同的回复内容。
 
+
+可用属性 | 说明
+---|---
+weixin_public_account | 当前公众号WeixinPam::PublicAccount实例
+weixin_user_account | 当前微信用户WeixinPam::UserAccount实例
+weixin_message | 微信推送的消息
+keyword | 用户发送的内容或事件的关键字
+
+
 ## 用Devise保护资源
 
 添加config/initializers/weixin_pam.rb,加入如下代码
